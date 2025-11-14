@@ -41,7 +41,7 @@
                             <select id="location_id" name="location_id" class="form-control select2 req">
                                 <option value="">Select Location</option>
 
-                                <?=getLocationListOption($locationList)?>
+                                <?=getLocationListOption($locationList,(!empty($dataRow->location_id) ? $dataRow->location_id : ''))?>
                             </select>  
                         </div>
                     <?php endif; ?>

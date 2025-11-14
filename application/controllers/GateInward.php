@@ -44,6 +44,7 @@ class GateInward extends MY_Controller{
         $this->data['trans_prefix'] = 'GI/'.getYearPrefix('SHORT_YEAR').'/';
         $this->data['trans_number'] = $this->data['trans_prefix'].$this->data['trans_no'];
         $this->data['unitList'] = $this->item->itemUnits();
+        $this->data['locationList'] = $this->storeLocation->getStoreLocationList(['final_location'=>1,'location_not_in'=>[$this->FIR_STORE->id,$this->RTD_STORE->id,$this->SCRAP_STORE->id,$this->CUT_STORE->id,$this->PACKING_STORE->id]]);
         $this->load->view($this->form,$this->data);
     }
 
@@ -124,6 +125,7 @@ class GateInward extends MY_Controller{
         $this->data['itemList'] = $this->item->getItemList(['item_type'=>[1,2,3,4,5,6,7,8,9]]);
         $this->data['gateInwardData'] = $gateInward;
         $this->data['unitList'] = $this->item->itemUnits();
+        $this->data['locationList'] = $this->storeLocation->getStoreLocationList(['final_location'=>1,'location_not_in'=>[$this->FIR_STORE->id,$this->RTD_STORE->id,$this->SCRAP_STORE->id,$this->CUT_STORE->id,$this->PACKING_STORE->id]]);
         $this->load->view($this->form,$this->data);
     }
 
@@ -280,8 +282,8 @@ class GateInward extends MY_Controller{
         $data = $this->input->post();
         $this->data['dataRow'] = $this->gateInward->getInwardItem(['id'=>$data['id']]);
         $this->data['locationList'] = $this->storeLocation->getStoreLocationList(['final_location'=>1,'location_not_in'=>[$this->FIR_STORE->id,$this->RTD_STORE->id,$this->SCRAP_STORE->id,$this->CUT_STORE->id,$this->PACKING_STORE->id]]);
-        
-        $this->load->view($this->inspectionFrom,$this->data);
+            
+        $this->load->view($this->inspectionFrom,$this->data);   
     }
 
     public function saveInspectedMaterial(){

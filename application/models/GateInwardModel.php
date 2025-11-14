@@ -116,7 +116,7 @@ class GateInwardModel extends masterModel{
                 endforeach;
             endif;
 
-            $itemData = $data['batchData'];unset($data['batchData']);
+            $itemData = $data['batchData'];unset($data['batchData'],$data['location_id']);
 
             $result = $this->store($this->grn_master,$data,'Gate Inward');
 

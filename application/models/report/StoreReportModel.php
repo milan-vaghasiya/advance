@@ -20,6 +20,11 @@ class StoreReportModel extends MasterModel{
         }else{
             $queryData['where']['item_master.item_type'] = $data['item_type'];
         }
+
+        if(!empty($data['category_id'])){
+            $queryData['where']['item_master.category_id'] = $data['category_id'];
+        }
+
         if(!empty($data['stock_type'])):
             if($data['stock_type'] == 1):
                 $queryData['where']['ifnull(st.stock_qty,0) > '] = "ifnull(st.stock_qty,0) > 0";

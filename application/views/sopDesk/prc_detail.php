@@ -83,6 +83,7 @@
 							</div>';
                                 
                             if (!empty($invData)){
+                                $total_qty = 0;
                                 $prcDetail .='<div class="col-md-12 col-lg-12 mt-2">
                                     <table class="table jpExcelTable">
                                         <tr class="bg-light-peach">
@@ -92,12 +93,16 @@
                                         </tr>';
                                         
                                         foreach ($invData as $row){
+                                            $total_qty += $row->inv_qty;
+
                                             $prcDetail .= '<tr>';
                                             $prcDetail .= '<td>' . $row->inv_number . '</td>';
                                             $prcDetail .= '<td>' . formatDate($row->inv_date) . '</td>';
                                             $prcDetail .= '<td>' . floatVal($row->inv_qty) . '</td>';
                                             $prcDetail .= '</tr>';
                                         }
+
+                                        $prcDetail .='<tr><td colspan="2" class="text-right"><b class="mr-2">Total</b></td><td><b>'.$total_qty.'</b></td></tr>';
                                 $prcDetail .='</table></div>';
                             }
 						$prcDetail .='</div>';

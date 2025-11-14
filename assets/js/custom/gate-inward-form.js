@@ -21,6 +21,7 @@ $(document).ready(function(){
 
         formData.po_number = $("#po_id :selected").data('po_no');
         formData.item_name = $("#item_id :selected").text();
+        formData.location_name = $("#location_id :selected").text();
         formData.fg_item_name = "";
         if($("#fg_item_id").val() != ""){
             formData.fg_item_name = $("#fg_item_id :selected").text();
@@ -37,6 +38,7 @@ $(document).ready(function(){
 		formData.com_qty = $("#com_qty").val();
         formData.item_type = $("#item_id :selected").data('item_type');//26-02-25
         formData.so_trans_id = $("#so_trans_id").val();
+        formData.location_id = $("#location_id").val();
         formData.item_remark = $("#item_remark").val();
 
         formData.trans_status = 1;        
@@ -73,6 +75,7 @@ $(document).ready(function(){
             $("#com_unit").val();//$("#com_unit").select2();  
             $("#com_qty").val();
             $("#uom_span").text("");
+            $("#location_id").val("");
             $("#item_remark").val("");
             $(".error").html("");
             initSelect2();
@@ -231,6 +234,11 @@ function AddBatchRow(data){
     cell = $(row.insertCell(-1));
 	cell.html(data.price);
     cell.append(priceInput);
+
+    var locationInput = $("<input/>",{type:"hidden",name:"batchData["+itemCount+"][location_id]",value:data.location_id});
+    cell = $(row.insertCell(-1));
+	cell.html(data.location_name);
+    cell.append(locationInput);
 
     var itemRemarkInput = $("<input/>",{type:"hidden",name:"batchData["+itemCount+"][item_remark]",value:data.item_remark});
     cell = $(row.insertCell(-1));

@@ -229,7 +229,10 @@
 			<?php
 			if (!empty($invData)) :
 				$i = 1;
+				$total_qty = 0;
 				foreach ($invData as $row) :
+					$total_qty += $row->inv_qty;
+
 					echo '<tr>';
 					echo '<td class="text-center">' . $i++ . '</td>';
 					echo '<td class="text-center">' . $row->inv_number . '</td>';
@@ -237,6 +240,8 @@
 					echo '<td class="text-center">' . floatVal($row->inv_qty) . '</td>';
 					echo '</tr>';
 				endforeach;
+
+				echo '<tr><td colspan="2" class="text-center"></td><td class="text-center"><b>Total</b></td><td class="text-center"><b>'.$total_qty.'</b></td></tr>';
 			endif;
 			?>
 		</table>

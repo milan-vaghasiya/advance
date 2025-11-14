@@ -90,7 +90,15 @@
                 <input type="text" id="price" class="form-control floatVal  req" value="">
             </div> 
 
-            <div class="col-md-12 form-group">  
+            <div class="col-md-3 form-group">
+                <label for="location_id">Location</label>
+                <select id="location_id" name="location_id" class="form-control select2 req">
+                    <option value="">Select Location</option>
+                    <?= getLocationListOption($locationList);?>
+                </select>  
+            </div>
+            
+            <div class="col-md-9 form-group">  
                 <label for="item_remark">Remark</label>
                 <div class="input-group">
                 <input type="text" id="item_remark" class="form-control" value="">
@@ -116,6 +124,7 @@
                             <th>Ref./Heat No.</th>
                             <th>Qty</th>
                             <th>Price</th>
+                            <th>Location</th>
                             <th>Remark</th>
                             <th>Action</th>
                         </tr>

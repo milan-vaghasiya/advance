@@ -494,7 +494,7 @@ class QualityReport extends MY_Controller
 			if($row->qty > 0 && $prodQty > 0){ $rejRate = round((($row->qty*100)/$prodQty),2); }
 			$tbodyData .= '<tr>
 								<td class="text-center">'.$i++.'</td>
-								<td>'.formatDate($row->trans_date).'</td>
+								<td>'.formatDate($row->decision_date).'</td>
 								<td>'.(!empty($row->item_code) ? $row->item_code : $row->item_name) . '</td>
 								<td>'.$row->prc_number.'</td>
 								

@@ -110,7 +110,7 @@ class SalesReportModel extends MasterModel{
 		
 		$queryData['leftJoin']['trans_main'] = "trans_main.id = trans_child.trans_main_id";
 		$queryData['leftJoin']['stock_trans'] = 'stock_trans.child_ref_id = trans_child.id AND stock_trans.trans_type = "INV" AND stock_trans.p_or_m = "-1" AND stock_trans.is_delete = 0';
-		$queryData['leftJoin']['so_master'] = "so_master.id = trans_main.ref_id AND trans_main.from_entry_type = 14";
+		$queryData['leftJoin']['so_master'] = "so_master.id = trans_main.ref_id AND (trans_main.from_entry_type = 14 OR trans_main.from_entry_type = 241)";
 		$queryData['leftJoin']['so_trans'] = "so_trans.trans_main_id = so_master.id";
 		
 		$queryData['where']['trans_main.trans_status !='] = 3;

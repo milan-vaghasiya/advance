@@ -5,12 +5,12 @@
             <div class="col-12">
                 <div class="page-title-box">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <h4 class="card-title pageHeader"><?=$pageHeader?></h4>
                         </div>       
-                        <div class="col-md-6 float-right">  
+                        <div class="col-md-8 float-right">  
                             <div class="input-group">
-                                <div class="input-group-append" style="width:40%;">
+                                <div class="input-group-append" style="width:30%;">
                                     <select id="item_type" class="form-control select2">
                                         <?php
                                             foreach($this->itemTypes as $type=>$typeName):
@@ -20,7 +20,12 @@
                                         ?>
                                     </select>
                                 </div>
-                                <div class="input-group-append" style="width:40%;">
+                                <div class="input-group-append" style="width:30%;">
+                                    <select id="category_id" class="form-control select2">
+                                        <option value="">ALL Category</option>
+                                    </select>
+                                </div>
+                                <div class="input-group-append" style="width:20%;">
                                     <select id="stock_type" class="form-control select2" >
                                         <option value="1">With Stock</option>
                                         <option value="2">Without Stock</option>
@@ -70,19 +75,23 @@
 <script>
 $(document).ready(function(){
 	reportTable();
-    setTimeout(function(){$(".loadData").trigger('click');},500);
+    setTimeout(function(){
+        $(".loadData").trigger('click');
+        $('#item_type').trigger('change');
+    },500);
     
     $(document).on('click','.loadData',function(e){
 		$(".error").html("");
 		var valid = 1;
 		var item_type = $('#item_type').val();
 		var stock_type = $('#stock_type').val();
+		var category_id = $('#category_id').val();
 		if($("#item_type").val() == ""){$(".item_type").html("Item Type is required.");valid=0;}
 		if($("#stock_type").val() == ""){$(".stock_type").html("Stock type is required.");valid=0;}
 		if(valid){
             $.ajax({
                 url: base_url + controller + '/getStockRegisterData',
-                data: {item_type:item_type,stock_type:stock_type},
+                data: {item_type:item_type,stock_type:stock_type,category_id:category_id},
 				type: "POST",
 				dataType:'json',
 				success:function(data){
@@ -115,6 +124,23 @@ $(document).ready(function(){
 			$("#modal-md .modal-footer .btn-save").hide();
 		});
 	});
+
+    $(document).on('change', '#item_type', function() {
+        var item_type = $(this).val();
+        
+        $.ajax({
+            type: "POST",
+            url: base_url + controller + '/getSubCategory',
+            data: {category_type:item_type},
+            dataType:'json',
+        }).done(function(response) {
+            if(response.status == 1){
+                $('#category_id').html('');
+                $('#category_id').html(response.subCatOptions);
+                initSelect2();
+            }
+        });
+    }); 
 });
 
 
