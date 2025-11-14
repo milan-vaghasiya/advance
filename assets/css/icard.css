@@ -1,0 +1,253 @@
+.company_ic{
+    background-size:100% 100% !important;
+    width:80mm;
+    height:128mm;
+    border:2px solid #000000;
+}
+.company_ic table{
+    /*margin-top:19mm;*/
+}
+.company_ic .table.borderless td, .company_ic .table.borderless th {
+    border: none;
+}
+.ic_profile_pc{
+    text-align: center;
+    width: 59%;
+    -webkit-mask-image: url('https://jalaram.nativebittechnologies.com/assets/images/background/jji_profile_mask.png');
+    mask-image: url('https://jalaram.nativebittechnologies.com/assets/images/background/jji_profile_mask.png');
+    -webkit-mask-position: top left;
+    mask-position: top left;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100%;
+    mask-size: 100%;
+}
+
+
+/*** ICARD - 1 ***/
+.icard-1{
+    background-color: #fff;
+    font-family: 'Heebo', sans-serif;
+    padding: 0px;
+    border-radius: 0px;
+    text-align: center;
+    box-shadow: 0 0 10px #555,5px 5px 0 5px rgba(0,0,0,0.01);
+}
+.icard-1 .icard-header{padding:5px;text-align:left;overflow:hidden;}
+.icard-1 .icard-header .logo-img{width:90px;}
+.icard-1 .icard-header .company_title{font-size:1rem;font-weight:bold;}
+.icard-1 .icard-header .company_address{font-size:10px;color:#888;text-align: justify;}
+.icard-1 .signature-img{
+    color: #fff;
+    background: #5c686d;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 2px 2px 2px #999, 0 0 0 5px #fff;
+    overflow: hidden;
+    position: absolute;
+    top: 25px;
+    right: 20px;
+}
+.icard-1 .signature-img img{
+    width: 100%;
+    height: auto;
+}
+.icard-1 .signature-details{
+    color: #fff;
+    background-color: #5c686d;
+    text-align: left;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+}
+.icard-1 .title{
+    font-size: 18px;
+    text-transform: uppercase;
+    margin: 0;
+}
+.icard-1 .designation{
+    font-size: 13px;
+    font-style: italic;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+.icard-1 .empcode{
+    font-size: 14px;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    text-indent:50px;
+}
+.icard-1 .signature-content{
+    padding: 0;
+    margin: 0 auto;
+    padding:0px 10px;
+}
+    
+.icard-1 .signature-content td,.icard-1 .signature-content th{
+    color: #555;
+    font-size: 13px;
+    text-align: left;
+    padding: 0px;
+    vertical-align: top !important;
+}
+.icard-1 .signature-content td span{
+    color: #5c686d;
+    margin-right: 5px;
+}
+@media screen and (max-width:576px){
+    .icard-1{ padding: 65px 0 30px; }
+    .icard-1 .signature-img{
+        transform: translateX(-50%);
+        top: 20px;
+        left: 50%;
+    }
+    .icard-1 .signature-details{
+        text-align: center;
+        padding: 75px 15px 15px;
+    }
+    .icard-1 .title{ font-size: 22px; }
+    .icard-1 .signature-content{ display: block; }
+    .icard-1 .signature-content td{
+        width: 100%;
+        padding: 0 10px;
+        text-align: center;
+    }
+}
+
+/*** PROFILE PICTUTRE UPLOAD ***/
+.profile-pic-wrapper {
+  /*height: 100vh;*/
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.pic-holder {
+  text-align: center;
+  position: relative;
+  border-radius: 50%;
+  border:0px solid #000000;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 5px #666, 0 0 0 5px #fff;
+}
+
+.pic-holder .pic {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+}
+
+.pic-holder .upload-file-block,
+.pic-holder .upload-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(90, 92, 105, 0.7);
+  color: #f8f9fc;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.pic-holder .upload-file-block {
+  cursor: pointer;
+}
+
+.pic-holder:hover .upload-file-block,
+.uploadProfileInput:focus ~ .upload-file-block {
+  opacity: 1;
+}
+
+.pic-holder.uploadInProgress .upload-file-block {
+  display: none;
+}
+
+.pic-holder.uploadInProgress .upload-loader {
+  opacity: 1;
+}
+
+/* Snackbar css */
+.snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 14px;
+  transform: translateX(-50%);
+}
+
+.snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}

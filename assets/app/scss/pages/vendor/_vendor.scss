@@ -1,0 +1,312 @@
+/* HOME */
+.svg-primary{
+	path{
+		fill: var(--primary);
+	}	
+}
+
+.card{
+	&.info-card{
+		.top-area{
+			.quantity{
+				color: #fff;
+				font-size: 30px;
+				margin-bottom: 0;
+			}
+			p{
+				font-size: 16px;
+				font-weight: 500;
+				opacity: 0.5;
+				color: #fff;
+			}
+		}
+		.icon-box-2{
+			background-color: rgba(255, 255, 255, 0.10);
+			border: 2px solid rgba(255, 255, 255, 0.10);
+			width: 60px;
+			height: 60px;
+			svg{
+				width: 30px;
+				height: 30px;
+			}
+		}
+		.bottom-area{
+			.review-title{
+				display: flex;
+				align-items: center;
+				color: #fff;
+				font-weight: 500;
+			}
+			.progress{
+				height: 1rem;
+				border-radius: var(--border-radius-sm);
+				background-color: rgba(255, 255, 255, 0.10);
+				border: 1px solid rgba(255, 255, 255, 0.10);
+				.progress-bar{					
+					border-radius: var(--border-radius-sm);
+					background-color: rgba(255, 255, 255, 0.50);
+				}
+			}
+		}
+	}
+	&.summary-card{
+		.card-header{
+			padding: 12px;
+		}
+		.nav-pills {
+			.nav-link{
+				padding: 3px 8px;
+				font-size: 12px;
+				border-radius: var(--border-radius-sm);
+				&.active{
+					background-color: var(--primary);
+				}
+			}
+		}
+	}
+	&.revenue-card{
+		.card-header{
+			padding: 12px;
+		}
+		.nav-pills {
+			.nav-link{
+				padding: 3px 8px;
+				font-size: 12px;
+				border-radius: var(--border-radius-sm);
+				&.active{
+					background-color: var(--primary);
+				}
+			}
+		}
+	}
+	&.store-card{
+		.card-body{
+			.card-info{
+				padding: 30px 20px 20px;
+				position: relative;
+				.btn{
+					position: absolute;
+					border-radius: var(--border-radius-base);
+					text-transform: capitalize;
+					top: -18px;
+					right: 20px;
+				}
+				.title{
+					font-weight: 500;
+				}
+				.info-bottom{
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+				}
+				.location {
+					display: flex;
+					align-items: center;
+					font-weight: 500;
+					i,
+					svg{
+						margin-right: 5px;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* Analytics */
+.order-detail-box{
+	li{
+		border-bottom: 1px solid var(--border-color);
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+		&:last-child{
+			padding-bottom: 0;
+			margin-bottom: 0;
+			border-bottom: 0;
+		}
+		span{
+			display: block;
+			color: #fff;
+			font-weight: 400;
+		}
+		p{
+			color: #fff;
+			font-weight: 600;
+			font-size: 18px;
+		}
+	}
+	&.style-2{
+		span{
+			display: block;
+			color: #888888;
+			font-weight: 400;
+			&.order-count{				
+				color: #01C54F;
+			}
+		}
+		p{
+			color: var(--title);
+			font-weight: 600;
+			font-size: 18px;
+		}
+	}
+}
+
+.feature-card{
+	.card-body{
+		padding: 20px 15px;
+	}
+	.title-head{
+		color: #fff;
+		font-size: 20px;
+	}
+	p{
+		color: #fff;
+		margin-bottom: 0;
+		font-weight: 400;
+	}
+	.icon{
+		position: absolute;
+		bottom: 5px;
+		transform: rotate(-15deg);
+		right: 5px;
+		opacity: 0.20;
+		img{
+			width: 75px;
+			height: 75px;
+		}
+		svg{
+			width: 75px;
+			height: 75px;
+			path{
+				fill: #fff;
+			}
+		}
+	}
+}
+
+.reward{
+	.icon{
+		width: 75px;
+		height: 75px;
+		float: right;
+		background-color: rgba(217, 217, 217, 0.10);
+		padding: 10px;
+		border-radius: var(--border-radius-base);
+	}
+}
+
+/* VENDOR PROFILE */
+.vendor-profile{
+	display: flex;
+	align-items: center;
+	border-bottom: 2px dashed var(--border-color);
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+	.profile-detail{
+		flex: 1;
+		span{
+			font-weight: 500;
+			font-size: 12px;
+		}
+	}
+}
+
+/* VENDOR EDIT PROFILE */
+.image-upload{
+	margin-bottom: 20px;
+	.imageuploadify{
+		&.well{
+			min-height: 130px;
+			justify-content: center;
+			border: 1px solid var(--border-color)!important;
+		}
+	}		
+	img{
+		width: 100%;
+	}
+}
+
+.edit-area{
+	.input-mini{
+		margin-bottom: 8px;
+		.form-control{
+			padding-left: 0;
+		}
+		&.form-group{
+			position: relative;
+			&:after{
+				content: "\f044";
+				position: absolute;
+				top: 12px;
+				right: 0;
+				font-size: 16px;
+				font-family: "Font Awesome 5 Free";
+				font-weight: 400;
+			}
+		}	
+	}
+}
+
+.store-time{
+	li{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;	
+		margin-bottom: 15px;
+		border-bottom: 1px solid var(--border-color);
+		.form-control{
+			width: 100px;
+			padding: 0;
+			height: 35px; 
+			border: 0; 
+			text-align: center;			
+		}	
+	}
+}
+
+.product-list-2{
+	ul{
+		margin: -10px 0;
+		li{
+			display: flex;
+			align-items: center;
+			position: relative;
+			padding: 10px 0;
+			.media{
+				background-color: var(--rgba-primary-1);
+				border-radius: var(--border-radius-base);
+				padding: 5px;
+				position: relative;
+				.badge{
+					position: absolute;
+					top: 0;
+					left: 0;
+				}
+			}
+			.product-content{
+				line-height: 20px;
+				.name{
+					margin-bottom: 0;
+				}
+				.price{
+					font-size: 16px;
+					font-weight: 600;
+					color: var(--title);
+				}
+			}
+			.veg-logo{
+				position: absolute;
+				top: 10px;
+				right: 0;
+				svg{
+					width: 12px;
+					height: 12px;
+					path{
+						fill: $success;
+					}
+				}
+			}
+		}
+	}
+}

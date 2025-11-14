@@ -1,0 +1,14 @@
+/* USER DASHBOARD */
+.price-box{
+	border-radius: var(--border-radius-base);
+	padding: 15px;
+	box-shadow: rgba(100, 100, 111, 0.20) 0px 0px 20px 0px;
+	background-color: var(--card-bg);
+	.last-price,
+	.price-title{
+		display: block;
+	}
+	.price{
+		font-size: 1.75rem;
+	}
+}
