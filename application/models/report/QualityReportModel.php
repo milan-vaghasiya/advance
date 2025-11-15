@@ -118,7 +118,7 @@ class QualityReportModel extends MasterModel
     public function getRejectionMonitoring($data){
 		$queryData = array();
 		$queryData['tableName'] = "rejection_log";
-        $queryData['select'] = "rejection_log.*,prc_log.process_by,prc_log.trans_date,prc_log.qty as ok_qty,prc_master.prc_number,item_master.item_code, item_master.item_name,process_master.process_name,shift_master.shift_name,employee_master.emp_name,rejection_comment.remark as rr_comment,rejection_comment.created_at as decision_date, process.process_name as rejction_stage, IF(prc_log.process_by = 1, machine.item_code,
+        $queryData['select'] = "rejection_log.*,prc_log.process_by,prc_log.trans_date,prc_log.qty as ok_qty,prc_master.prc_number,item_master.item_code, item_master.item_name,process_master.process_name,shift_master.shift_name,employee_master.emp_name,rejection_comment.remark as rr_comment, process.process_name as rejction_stage, IF(prc_log.process_by = 1, machine.item_code,
         IF(prc_log.process_by = 2,department_master.name, IF(prc_log.process_by = 3,party_master.party_name,''))) as processor_name";
 		
 		$queryData['select'] .= ", (CASE WHEN rejection_log.rr_by = 0 THEN rr_machine.item_code ELSE party.party_name END) as rr_processor";
@@ -140,7 +140,7 @@ class QualityReportModel extends MasterModel
         $queryData['leftJoin']['item_master rr_machine'] = "rr_machine.id = rejection_log.machine_id";
 		$queryData['leftJoin']['employee_master rr_emp'] = 'rr_emp.id = rejection_log.operator_id';
 
-		$queryData['customWhere'][] = "DATE(rejection_comment.created_at) BETWEEN '" . $data['from_date'] . "' AND '" . $data['to_date'] . "'";
+		$queryData['customWhere'][] = "DATE(rejection_log.created_at) BETWEEN '" . $data['from_date'] . "' AND '" . $data['to_date'] . "'";
 		if (!empty($data['item_id'])) { $queryData['where']['prc_master.item_id'] = $data['item_id']; }
 		if (!empty($data['process_id'])) { $queryData['where']['rejection_log.rr_stage'] = $data['process_id']; }
 

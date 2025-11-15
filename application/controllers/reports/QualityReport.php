@@ -494,7 +494,7 @@ class QualityReport extends MY_Controller
 			if($row->qty > 0 && $prodQty > 0){ $rejRate = round((($row->qty*100)/$prodQty),2); }
 			$tbodyData .= '<tr>
 								<td class="text-center">'.$i++.'</td>
-								<td>'.formatDate($row->decision_date).'</td>
+								<td>'.formatDate($row->created_at).'</td>
 								<td>'.(!empty($row->item_code) ? $row->item_code : $row->item_name) . '</td>
 								<td>'.$row->prc_number.'</td>
 								
@@ -520,7 +520,7 @@ class QualityReport extends MY_Controller
 						<th colspan="4" style="text-align:right !important;">Total</th>
 						<th>'.round($totalProdQty,2).'</th>
 						<th>'.round($totalRejQty,2).'</th>
-						<th>'.round((($totalRejQty*100)/$totalProdQty),2).'</th>
+						<th>'.round(($totalProdQty > 0) ? round((($totalRejQty * 100) / $totalProdQty), 2) : 0).'</th>
 						<th></th>
 						
 						<th></th><th></th><th></th><th></th>

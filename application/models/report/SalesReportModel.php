@@ -105,11 +105,13 @@ class SalesReportModel extends MasterModel{
     }
 
 	public function getDispatchDetailsData($data = array()){
-		$queryData['tableName'] = $this->transChild;
-		$queryData['select'] = "trans_main.trans_number, trans_main.trans_date, trans_main.party_name, trans_child.item_name, trans_child.hsn_code, stock_trans.batch_no, SUM(ABS(stock_trans.qty)) as dispatch_qty, (trans_child.qty) as inv_qty,so_master.doc_no,so_trans.cod_date";
+		/* $queryData['tableName'] = $this->transChild;
+		$queryData['select'] = "trans_main.trans_number, trans_main.trans_date, trans_main.party_name, trans_child.item_name,trans_child.id, trans_child.hsn_code, stock_trans.batch_no, SUM(ABS(stock_trans.qty)) as dispatch_qty, (trans_child.qty) as inv_qty,so_master.doc_no,so_trans.cod_date";
 		
 		$queryData['leftJoin']['trans_main'] = "trans_main.id = trans_child.trans_main_id";
+
 		$queryData['leftJoin']['stock_trans'] = 'stock_trans.child_ref_id = trans_child.id AND stock_trans.trans_type = "INV" AND stock_trans.p_or_m = "-1" AND stock_trans.is_delete = 0';
+
 		$queryData['leftJoin']['so_master'] = "so_master.id = trans_main.ref_id AND (trans_main.from_entry_type = 14 OR trans_main.from_entry_type = 241)";
 		$queryData['leftJoin']['so_trans'] = "so_trans.trans_main_id = so_master.id";
 		
@@ -130,10 +132,42 @@ class SalesReportModel extends MasterModel{
             $queryData['where']['trans_child.item_id'] = $data['item_id'];
         endif;
 		
-		$queryData['group_by'][] = "trans_child.trans_main_id, trans_child.item_id, stock_trans.batch_no";
+		$queryData['group_by'][] = "trans_child.trans_main_id, trans_child.item_id, stock_trans.batch_no"; */
+
+        $queryData['tableName'] = $this->transChild;
+        $queryData['select'] = "trans_main.trans_number, trans_main.trans_date, trans_main.party_name, trans_child.*,stock_data.batch_no, stock_data.dispatch_qty,(trans_child.qty) as inv_qty,so_master.doc_no,so_trans.cod_date";
+
+        $queryData['leftJoin']['trans_main'] = "trans_main.id = trans_child.trans_main_id";
+                
+        $queryData['leftJoin']['(SELECT stock_trans.item_id, SUM(stock_trans.qty) AS dispatch_qty,GROUP_CONCAT(batch_no) AS batch_no, stock_trans.child_ref_id,stock_trans.id FROM `stock_trans` WHERE stock_trans.trans_type = "INV" AND stock_trans.p_or_m = "-1" AND stock_trans.is_delete = 0 GROUP BY stock_trans.child_ref_id,batch_no) AS stock_data'] = 'stock_data.child_ref_id = trans_child.id';
+
+        $queryData['leftJoin']['so_trans'] = "so_trans.id = trans_child.ref_id";
+		$queryData['leftJoin']['so_master'] = "so_master.id = so_trans.trans_main_id AND (trans_main.from_entry_type = 14 OR trans_main.from_entry_type = 241)";
+		
+		$queryData['where']['trans_main.trans_status !='] = 3;
+		$queryData['where_in']['trans_main.entry_type'] = [20];
+		
+		if($data['date_filter'] == 1){
+			$queryData['customWhere'][] = "trans_main.trans_date BETWEEN '".$data['from_date']."' AND '".$data['to_date']."'";
+		}else{
+			$queryData['customWhere'][] = "so_trans.cod_date BETWEEN '".$data['from_date']."' AND '".$data['to_date']."'";
+		}
+		
+		if (!empty($data['party_id'])):
+            $queryData['where']['trans_main.party_id'] = $data['party_id'];
+        endif;
+		
+		if(!empty($data['item_id'])):
+            $queryData['where']['trans_child.item_id'] = $data['item_id'];
+        endif;
+		
+		$queryData['group_by'][] = "trans_child.trans_main_id, trans_child.item_id, trans_child.id, stock_data.batch_no";
+
 		$queryData['order_by']['trans_main.trans_date']='ASC';
         $queryData['order_by']['trans_main.id']='ASC';
 		return $this->rows($queryData);
+
+        return $this->printQuery();
 	}
 	
 }
