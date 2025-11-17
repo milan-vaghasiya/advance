@@ -139,7 +139,7 @@ class SalesReportModel extends MasterModel{
 
         $queryData['leftJoin']['trans_main'] = "trans_main.id = trans_child.trans_main_id";
                 
-        $queryData['leftJoin']['(SELECT stock_trans.item_id, SUM(stock_trans.qty) AS dispatch_qty,batch_no, stock_trans.child_ref_id,stock_trans.id FROM `stock_trans` WHERE stock_trans.trans_type = "INV" AND stock_trans.p_or_m = "-1" AND stock_trans.is_delete = 0 GROUP BY stock_trans.child_ref_id,batch_no) AS stock_data'] = 'stock_data.child_ref_id = trans_child.id';
+        $queryData['leftJoin']['(SELECT stock_trans.item_id, SUM(stock_trans.qty) AS dispatch_qty,batch_no, stock_trans.child_ref_id,stock_trans.id FROM `stock_trans` WHERE stock_trans.trans_type = "INV" AND stock_trans.p_or_m = "-1" AND stock_trans.is_delete = 0 GROUP BY stock_trans.child_ref_id) AS stock_data'] = 'stock_data.child_ref_id = trans_child.id';
 
         $queryData['leftJoin']['so_trans'] = "so_trans.id = trans_child.ref_id";
 		$queryData['leftJoin']['so_master'] = "so_master.id = so_trans.trans_main_id AND (trans_main.from_entry_type = 14 OR trans_main.from_entry_type = 241)";
