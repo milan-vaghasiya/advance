@@ -11,7 +11,7 @@ class SalesOrderModel extends MasterModel{
 
     public function getDTRows($data){
         $data['tableName'] = $this->soTrans;
-        $data['select'] = "so_trans.id as trans_child_id,item_master.item_name, item_master.item_name,so_trans.qty,so_trans.dispatch_qty,IF((so_trans.qty - so_trans.dispatch_qty) < 0, 0, (so_trans.qty - so_trans.dispatch_qty)) as pending_qty, IFNULL(so_trans.cod_date,'') as cod_date, (CASE WHEN so_trans.cod_date IS NOT NULL THEN DATEDIFF(so_trans.cod_date, CURDATE()) ELSE 0 END) as due_days, so_master.id,so_master.trans_number, DATE_FORMAT(so_master.trans_date,'%d-%m-%Y') as trans_date,so_master.doc_no, DATE_FORMAT(so_master.doc_date,'%d-%m-%Y') as doc_date,party_master.party_name,so_trans.trans_status,ifnull(st.stock_qty,0) as stock_qty,party_master.sales_executive,so_master.party_id,(CASE WHEN party_master.sales_executive = so_master.party_id THEN 'Client' ELSE 'Office' END) as ordered_by,so_master.is_approve, IFNULL(ecn_master.drw_no,'') as drw_no,employee_master.emp_name as created_name,emp.emp_name as updated_name,so_trans.created_at,so_trans.updated_at,IFNULL(IFNULL(SUM(prc_master.prc_qty),0) - (IFNULL(SUM(prc_detail.stored_qty),0) + IFNULL(SUM(prc_detail.rej_qty),0)),0) as wip_qty,so_trans.price,so_master.so_rev_no, itemWisePrc.item_wip_qty"; 
+        $data['select'] = "so_trans.id as trans_child_id,item_master.item_name, item_master.item_name,so_trans.qty,so_trans.dispatch_qty,IF((so_trans.qty - so_trans.dispatch_qty) < 0, 0, (so_trans.qty - so_trans.dispatch_qty)) as pending_qty, IFNULL(so_trans.cod_date,'') as cod_date, (CASE WHEN so_trans.cod_date IS NOT NULL THEN DATEDIFF(so_trans.cod_date, CURDATE()) ELSE 0 END) as due_days, so_master.id,so_master.trans_number, DATE_FORMAT(so_master.trans_date,'%d-%m-%Y') as trans_date,so_master.doc_no, DATE_FORMAT(so_master.doc_date,'%d-%m-%Y') as doc_date,party_master.party_name,so_trans.trans_status,ifnull(st.stock_qty,0) as stock_qty,party_master.sales_executive,so_master.party_id,(CASE WHEN party_master.sales_executive = so_master.party_id THEN 'Client' ELSE 'Office' END) as ordered_by,so_master.is_approve, IFNULL(ecn_master.drw_no,'') as drw_no,employee_master.emp_name as created_name,emp.emp_name as updated_name,so_trans.created_at,so_trans.updated_at,IFNULL((IFNULL(SUM(prc_master.prc_qty),0) * IFNULL(productProcess.max_output_qty,0)) - (IFNULL(SUM(prc_detail.stored_qty),0) + IFNULL(SUM(prc_detail.rej_qty),0)),0) as wip_qty,so_trans.price,so_master.so_rev_no, itemWisePrc.item_wip_qty"; 
 
         $data['leftJoin']['so_master'] = "so_master.id = so_trans.trans_main_id";
         $data['leftJoin']['(SELECT SUM(qty * p_or_m) as stock_qty,item_id FROM stock_trans WHERE is_delete = 0 AND location_id="'.$this->RTD_STORE->id.'" GROUP BY item_id) as st'] = "so_trans.item_id = st.item_id";
@@ -22,18 +22,23 @@ class SalesOrderModel extends MasterModel{
         $data['leftJoin']['employee_master emp'] = "emp.id  = so_trans.updated_by";
 		$data['leftJoin']['prc_master'] = "prc_master.so_trans_id = so_trans.id AND prc_master.prc_type = 1 AND prc_master.status = 2";
         $data['leftJoin']['prc_detail'] = "prc_detail.prc_id = prc_master.id";
-		
-		$data['leftJoin']['(SELECT 
-					pm.item_id,
-					IFNULL(IFNULL(SUM(pm.prc_qty),0) - (IFNULL(SUM(prc_detail.stored_qty),0) + IFNULL(SUM(prc_detail.rej_qty),0)),0) as item_wip_qty
-				FROM 
-					prc_master pm
-				LEFT JOIN 
-					prc_detail ON prc_detail.prc_id = pm.id AND prc_detail.is_delete = 0
-				WHERE 
-					pm.prc_type = 1 AND pm.status = 2 AND pm.is_delete = 0
-				GROUP BY
-					pm.item_id) as itemWisePrc'] = "itemWisePrc.item_id = so_trans.item_id";
+
+        $data['leftJoin']['(SELECT pp.item_id,IFNULL(MAX(pp.output_qty),0) AS max_output_qty FROM product_process pp WHERE pp.is_delete = 0 GROUP BY pp.item_id) AS productProcess'] = "productProcess.item_id = so_trans.item_id";
+
+        $data['leftJoin']['(SELECT 
+            prc_master.item_id, 
+            IFNULL(SUM(prc_master.prc_qty),0),
+            IFNULL(productProcess.max_output_qty,0),
+            IFNULL(SUM(prc_detail.stored_qty),0),
+            IFNULL(SUM(prc_detail.rej_qty),0),	
+            IFNULL((IFNULL(SUM(prc_master.prc_qty),0) * IFNULL(productProcess.max_output_qty,0)) - (IFNULL(SUM(prc_detail.stored_qty),0) + IFNULL(SUM(prc_detail.rej_qty),0)),0) as item_wip_qty
+        FROM 
+            prc_master 
+        LEFT JOIN prc_detail ON prc_detail.prc_id = prc_master.id
+
+        LEFT JOIN (SELECT pp.item_id,IFNULL(MAX(pp.output_qty),0) AS max_output_qty FROM product_process pp WHERE pp.is_delete = 0 GROUP BY pp.item_id) AS productProcess ON productProcess.item_id = prc_master.item_id
+
+        WHERE prc_detail.is_delete = 0 AND prc_master.prc_type = 1 AND prc_master.status = 2 AND prc_master.is_delete = 0 GROUP BY prc_master.item_id) as itemWisePrc'] = "itemWisePrc.item_id = prc_master.item_id";
 
         $data['where']['so_trans.entry_type'] = $data['entry_type'];
 		

@@ -92,7 +92,7 @@
 
             <div class="col-md-3 form-group">
                 <label for="location_id">Location</label>
-                <select id="location_id" name="location_id" class="form-control select2 req">
+                <select id="location_id" class="form-control select2 req">
                     <option value="">Select Location</option>
                     <?= getLocationListOption($locationList);?>
                 </select>  
