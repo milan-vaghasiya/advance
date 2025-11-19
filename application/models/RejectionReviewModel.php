@@ -167,8 +167,7 @@ class RejectionReviewModel extends MasterModel
             $data['leftJoin']['employee_master rej_emp'] = "rej_emp.id = rejection_log.operator_id";
             
             $data['where']['rejection_log.source'] = $data['source'];
-            $data['where']['rejection_log.decision_type'] = '1';
-
+          
             $data['searchCol'][] = "";
             $data['searchCol'][] = "";
             $data['searchCol'][] = "prc_master.prc_number";

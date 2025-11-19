@@ -358,7 +358,7 @@ class SalesReport extends MY_Controller{
 	public function getDispatchDetailsData(){
         $data = $this->input->post();
       
-        $tbody=""; $i=1; $dispatch_qty = $inv_qty = 0;
+        $tbody=""; $i=1; $inv_qty = 0;
         $result = $this->salesReport->getDispatchDetailsData($data);
 		
         if(!empty($result)):
@@ -367,24 +367,22 @@ class SalesReport extends MY_Controller{
                     <td class="text-center">'.$i++.'</td>
                     <td>'.$row->trans_number.'</td>
                     <td>'.formatDate($row->trans_date).'</td>
+					<td>'.(!empty($row->doc_no) ? $row->doc_no : "").'</td>
                     <td>'.$row->party_name.'</td>
                     <td>'.$row->item_name.'</td>
                     <td>'.$row->hsn_code.'</td>
-                    <td>'.$row->batch_no.'</td>
-					<td>'.(!empty($row->doc_no) ? $row->doc_no : "").'</td>
 					<td>'.formatDate($row->cod_date).'</td>
-                    <td>'.floatVal($row->dispatch_qty).'</td>
+                    <td>'.$row->batch_no.'</td>
 					<td>'.floatVal($row->inv_qty).'</td>';
                 $tbody.='</tr>';
 				
-				$dispatch_qty += $row->dispatch_qty;
+				$inv_qty += $row->inv_qty;
             endforeach;
         endif;
 		
 		$tfoot = '<tr class="thead-dark">
 			<th colspan="9"></th>
-			<th>'.floatVal($dispatch_qty).'</th>
-			<th></th>
+			<th>'.floatVal($inv_qty).'</th>
 		</tr>';
         
         $this->printJson(['status'=>1, 'tbody'=>$tbody, 'tfootData'=>$tfoot]);

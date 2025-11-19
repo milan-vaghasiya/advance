@@ -106,11 +106,17 @@ class SalesReportModel extends MasterModel{
 
 	public function getDispatchDetailsData($data = array()){
         $queryData['tableName'] = $this->transChild;
-        $queryData['select'] = "trans_main.trans_number, trans_main.trans_date, trans_main.party_name, trans_child.*,stock_data.batch_no, stock_data.dispatch_qty,(trans_child.qty) as inv_qty,so_master.doc_no,so_trans.cod_date";
+        $queryData['select'] = "trans_main.trans_number, trans_main.trans_date, trans_main.party_name, trans_child.*,stock_data.batch_no,stock_data.ref_no, (trans_child.qty) as inv_qty,so_master.doc_no,so_trans.cod_date";
 
         $queryData['leftJoin']['trans_main'] = "trans_main.id = trans_child.trans_main_id";
                 
-        $queryData['leftJoin']['(SELECT stock_trans.item_id, SUM(stock_trans.qty) AS dispatch_qty,batch_no, stock_trans.child_ref_id,stock_trans.id FROM `stock_trans` WHERE stock_trans.trans_type = "INV" AND stock_trans.p_or_m = "-1" AND stock_trans.is_delete = 0 GROUP BY stock_trans.child_ref_id) AS stock_data'] = 'stock_data.child_ref_id = trans_child.id';
+        $queryData['leftJoin']['(SELECT GROUP_CONCAT(CONCAT(stock_trans.batch_no, "(", TRIM(TRAILING ".000" FROM stock_trans.qty),")") SEPARATOR ", ") AS batch_no, ref_no, stock_trans.child_ref_id
+            FROM stock_trans
+            WHERE stock_trans.trans_type = "INV"
+            AND stock_trans.p_or_m = "-1"
+            AND stock_trans.is_delete = 0
+            GROUP BY stock_trans.child_ref_id
+        ) AS stock_data'] = 'stock_data.child_ref_id = trans_child.id';
 
         $queryData['leftJoin']['so_trans'] = "so_trans.id = trans_child.ref_id";
 		$queryData['leftJoin']['so_master'] = "so_master.id = so_trans.trans_main_id AND (trans_main.from_entry_type = 14 OR trans_main.from_entry_type = 241)";
@@ -132,12 +138,10 @@ class SalesReportModel extends MasterModel{
             $queryData['where']['trans_child.item_id'] = $data['item_id'];
         endif;
 		
-		$queryData['group_by'][] = "trans_child.trans_main_id, trans_child.item_id, trans_child.id, stock_data.batch_no";
-
+		$queryData['group_by'][] = "trans_child.id";
 		$queryData['order_by']['trans_main.trans_date']='ASC';
         $queryData['order_by']['trans_main.id']='ASC';
 		return $this->rows($queryData);
-	}
-	
+	}	
 }
 ?>

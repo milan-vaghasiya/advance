@@ -57,13 +57,12 @@
 										<th>#</th>
 										<th>Inv No.</th>
 										<th>Inv Date</th>
+										<th>Cust. PO. No.</th>
 										<th>Party Name</th>
 										<th>Item Name</th>
 										<th>HSN Code</th>
-										<th>PRC Number</th>
-										<th>Cust. PO. No.</th>
 										<th>Delivery Date</th>
-										<th>PRC Qty</th>
+										<th>PRC Number</th>
 										<th>Inv Qty</th>
 									</tr>
 								</thead>
