@@ -258,13 +258,15 @@ class Outsource extends MY_Controller
         $this->data['tableHeader'] = getProductionDtHeader('jwbill');
         $this->data['startDate'] = getFyDate(date("Y-m-01"));
         $this->data['endDate'] = getFyDate(date("Y-m-d"));
+        $this->data['vendorList'] = $this->party->getPartyList(['party_category'=>3]);
         $this->load->view('outsource/jwbill_index',$this->data); 
     }
 
-    public function getjobWorkBillDTRows($from_date="",$to_date=""){
+    public function getjobWorkBillDTRows($from_date="",$to_date="", $party_id = ""){
         $data = $this->input->post();
         $data['from_date'] = $from_date;
         $data['to_date'] = $to_date;
+        $data['party_id'] = $party_id;
         $result = $this->outsource->getJwbDTRows($data);
         $sendData = array();$i=1;
         foreach($result['data'] as $row):          

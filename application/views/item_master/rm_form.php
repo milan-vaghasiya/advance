@@ -14,7 +14,7 @@
 				<input type="text" name="item_name" class="form-control req" value="<?=htmlentities((!empty($dataRow->item_name)) ? $dataRow->item_name : "")?>" />      
             </div>
 
-            <div class="col-md-3 form-group">
+            <div class="col-md-4 form-group">
                 <label for="grade_id">Material Grade</label>
                 <select name="grade_id" id="grade_id" class="form-control select2">
                     <option value="">Select Material Grade</option>
@@ -27,7 +27,16 @@
                 </select>
             </div>
 
-            <div class="col-md-3 form-group">
+            <div class="col-md-4 form-group">
+                <label for="product_type">Item Type</label>
+                <select name="product_type" id="product_type" class="form-control select2 req">
+                    <option value="3" <?= (!empty($item_type) && $item_type == 3) ? "selected" : "" ?>>Raw Material</option>
+                    <option value="2" <?= (!empty($item_type) && $item_type == 2) ? "selected" : "" ?> <?= empty($dataRow->id) ? "disabled" : "";?>>Consumable</option>
+                    <option value="9" <?= (!empty($item_type) && $item_type == 9) ? "selected" : "" ?> <?= empty($dataRow->id) ? "disabled" : "";?>>Packing Material</option>
+                </select>
+            </div>
+
+            <div class="col-md-4 form-group">
                 <label for="category_id">Category</label>
                 <select name="category_id" id="category_id" class="form-control select2 req">
                     <option value="0">Select</option>
@@ -54,7 +63,7 @@
                 <label for="price">Price</label>
                 <input type="text" name="price" class="form-control floatOnly" value="<?= (!empty($dataRow->price)) ? $dataRow->price : "0" ?>" />
             </div>
-            <div class="col-md-4 form-group">
+            <div class="col-md-3 form-group">
                 <label for="uom">UOM</label>
                 <select name="uom" id="uom" class="form-control select2">
                     <option value="0">--</option>

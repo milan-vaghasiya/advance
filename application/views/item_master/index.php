@@ -47,7 +47,7 @@
     </div>
 </div>
 <?php $this->load->view('includes/footer'); ?>
-<!--<script src="<?php //echo base_url();?>assets/js/custom/product.js?v=<?=time()?>"></script>-->
+<script src="<?php echo base_url();?>assets/js/custom/product.js?v=<?=time()?>"></script>
 <script>
 function getProcessTransHtml(data){
     var postData = data.postData || {};

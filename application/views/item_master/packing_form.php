@@ -21,6 +21,15 @@
             </div> 
 
             <div class="col-md-3 form-group">
+                <label for="product_type">Item Type</label>
+                <select name="product_type" id="product_type" class="form-control select2 req">
+                    <option value="3" <?= (!empty($item_type) && $item_type == 3) ? "selected" : "" ?> <?= empty($dataRow->id) ? "disabled" : "";?>>Raw Material</option>
+                    <option value="2" <?= (!empty($item_type) && $item_type == 2) ? "selected" : "" ?> <?= empty($dataRow->id) ? "disabled" : "";?>>Consumable</option>
+                    <option value="9" <?= (!empty($item_type) && $item_type == 9) ? "selected" : "" ?>>Packing Material</option>
+                </select>
+            </div> 
+            
+            <div class="col-md-3 form-group">
                 <label for="category_id">Category</label>
                 <select name="category_id" id="category_id" class="form-control select2 req">
                     <option value="0">Select</option>

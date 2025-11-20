@@ -151,6 +151,11 @@ class Items extends MY_Controller{
                 
             endif;
             unset($data['old_image']);
+            
+            if(!empty($data['product_type'])){
+                $data['item_type'] = $data['product_type'];
+                unset($data['product_type']);
+            }
 			$data['tc_head'] = (!empty($data['tc_head'])?implode(",",$data['tc_head']):'');
             $data['fg_id'] = (!empty($data['fg_id'])?implode(",",$data['fg_id']):'');
             $data['process_id'] = (!empty($data['process_id'])?implode(",",$data['process_id']):'');
@@ -2152,5 +2157,17 @@ class Items extends MY_Controller{
         endif;
     }
 	/** End Tool Bom*/
+
+    public function getCategoryList(){
+		$data = $this->input->post();
+		$categoryList = $this->itemCategory->getCategoryList(['category_type' => $data['product_type'],'final_category'=>1]);
+		$options = '<option value="">Select</option>';
+		if(!empty($categoryList)){
+			foreach($categoryList as $row){
+				$options .= '<option value="'.$row->id.'">'.$row->category_name.'</option>';
+			}
+		}
+		$this->printJson(['status'=>1, 'options'=>$options]);
+	}
 }
 ?>

@@ -1,4 +1,4 @@
-<form>
+<form id="billForm" data-res_function="challanResponse">
     <div class="col-md-12">
         <div class="row">
             <input type="hidden" name="ids" id="ids" value="<?= (!empty($log_ids)) ? $log_ids: ""; ?>" />

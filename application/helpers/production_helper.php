@@ -339,8 +339,10 @@ function getProductionDtHeader($page){
     $data['jobworkOrder'][] = ["name"=>"Remark"];
 
     /* Jobwork Bill Header */
+    $masterCheckBox = '<input type="checkbox" id="masterSelect" class="filled-in chk-col-success BulkRequest" value=""><label for="masterSelect">ALL</label>';
     $data['jwbill'][] = ["name"=>"Action","class"=>"text-center no_filter noExport","sortable"=>FALSE];
 	$data['jwbill'][] = ["name"=>"#","class"=>"text-center no_filter","sortable"=>FALSE]; 
+    $data['jwbill'][] = ["name"=>$masterCheckBox,"textAlign"=>"center","class"=>"text-center no_filter","orderable"=>"false"];
     $data['jwbill'][] = ["name"=>"In Ch. Date"];
     $data['jwbill'][] = ["name"=>"In Ch. No"];
     $data['jwbill'][] = ["name"=>"Challan No"];
@@ -1004,12 +1006,13 @@ function getJobWorkOrderData($data){
 
 /*Vendor Challan Table Data */
 function getjobWorkBillData($data){
+    $selectBox = '<input type="checkbox" name="log_id[]" id="log_id_'.$data->log_ids.'" class="filled-in chk-col-success BulkRequest" value="'.$data->log_ids.'"><label for="log_id_'.$data->log_ids.'"></label>';   
 
-    $billParam = "{'postData':{'log_ids':'".$data->log_ids."'},'modal_id' : 'modal-md', 'form_id' : 'billForm', 'title' : 'Vendor Challan','call_function':'jobWorkBill','fnsave':'saveJobWorkBill'}";
+    $billParam = "{'postData':{'log_ids':'".$data->log_ids."'},'modal_id' : 'modal-md', 'form_id' : 'billForm', 'title' : 'Vendor Challan','call_function':'jobWorkBill','fnsave':'saveJobWorkBill','js_store_fn':'customStore'}";
     $billBtn = '<a href="javascript:void(0)" type="button" class="btn btn-success permission-modify" datatip="Vendor Challan" flow="down" onclick="modalAction('.$billParam.');"><i class="fa fa-file-alt"></i></a>';
 
     $action = getActionButton($billBtn);  
-    return[$action,$data->sr_no,formatDate($data->trans_date),$data->in_challan_no,$data->challan_no,$data->party_name];
+    return[$action,$data->sr_no,$selectBox,formatDate($data->trans_date),$data->in_challan_no,$data->challan_no,$data->party_name];
 }
 
 /* RM Challan Table Data */ 

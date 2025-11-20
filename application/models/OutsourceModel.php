@@ -168,6 +168,7 @@ class OutsourceModel extends MasterModel{
 
 		if(!empty($data['from_date'])) { $data['where']['prc_log.trans_date >='] = $data['from_date']; }
         if(!empty($data['to_date'])) { $data['where']['prc_log.trans_date <='] = $data['to_date']; }
+        if(!empty($data['party_id'])) { $data['where']['party_master.id'] = $data['party_id']; }
 		
         $data['group_by'][] = 'outsource.party_id,prc_log.trans_date,prc_log.in_challan_no';
 		$data['order_by']['prc_log.trans_date'] = "ASC";

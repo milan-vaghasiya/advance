@@ -174,6 +174,22 @@ $(document).ready(function(){
         var send_data = {'item_id':item_id,'rev_no':rev_no};  
         window.open(base_url + controller + '/getRevisionExcel/'+encodeURIComponent(window.btoa(JSON.stringify(send_data))),'_blank').focus();
     });
+
+    $(document).on('change','#product_type',function(){
+		var product_type = $(this).val();
+		if(product_type){
+			$.ajax({
+				url:base_url + controller + '/getCategoryList',
+				data:{product_type:product_type},
+				method:"POST",
+				dataType:"json",
+				success:function(data){
+					$("#category_id").html('');
+					$("#category_id").html(data.options);
+				}
+			});
+		}
+	}); 
 });
 
 function getProductKitHtml(data,formId="addProductKitItems"){ 
