@@ -339,7 +339,7 @@ function getProductionDtHeader($page){
     $data['jobworkOrder'][] = ["name"=>"Remark"];
 
     /* Jobwork Bill Header */
-    $masterCheckBox = '<input type="checkbox" id="masterSelect" class="filled-in chk-col-success BulkRequest" value=""><label for="masterSelect">ALL</label>';
+    $masterCheckBox = '<input type="checkbox" id="masterSelect" class="filled-in chk-col-success BulkRequest" value=""><label for="masterSelect"><b>ALL</b></label>';
     $data['jwbill'][] = ["name"=>"Action","class"=>"text-center no_filter noExport","sortable"=>FALSE];
 	$data['jwbill'][] = ["name"=>"#","class"=>"text-center no_filter","sortable"=>FALSE]; 
     $data['jwbill'][] = ["name"=>$masterCheckBox,"textAlign"=>"center","class"=>"text-center no_filter","orderable"=>"false"];
