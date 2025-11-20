@@ -39,9 +39,9 @@ class QualityReportModel extends MasterModel
 
 	public function getBatchHistoryTrans($param=[]){
         $data['tableName'] = "stock_trans";
-        $data['select'] = "prc_master.id,prc_master.prc_type,prc_master.prc_number,prc_master.prc_qty,item_master.item_code,item_master.item_name,prc_master.cutting_flow,prc_master.status,prc_detail.process_ids,prc_detail.cut_weight,stock_trans.item_id,grnTrans.trans_number,im.item_code as grn_item_code,im.item_name as grn_item_name,SUM(stock_trans.qty) as grn_qty,stock_trans.main_ref_id";
+        $data['select'] = "prc_master.id,prc_master.prc_type,prc_master.prc_number,prc_master.prc_qty,item_master.item_code,item_master.item_name,prc_master.cutting_flow,prc_master.status,prc_detail.process_ids,prc_detail.cut_weight,stock_trans.item_id,grnTrans.trans_number,im.item_code as grn_item_code,im.item_name as grn_item_name,SUM(stock_trans.qty) as grn_qty,stock_trans.main_ref_id,sim.item_name as challan_item_name,sim.item_code as challan_item_code,stock_trans.trans_type,stock_trans.ref_no,stock_trans.qty as challan_qty";
         
-        $data['leftJoin']['prc_master'] = "prc_master.id = stock_trans.child_ref_id AND prc_master.batch_no = stock_trans.batch_no AND prc_master.is_delete = 0 AND stock_trans.trans_type = 'SSI'";
+        $data['leftJoin']['prc_master'] = "prc_master.id = stock_trans.child_ref_id AND prc_master.batch_no = stock_trans.batch_no AND prc_master.is_delete = 0 AND (stock_trans.trans_type = 'SSI')";
         $data['leftJoin']['prc_detail'] = "prc_detail.prc_id = prc_master.id";
         $data['leftJoin']['item_master'] = "item_master.id = prc_master.item_id";
 
@@ -54,11 +54,13 @@ class QualityReportModel extends MasterModel
 
         $data['leftJoin']['item_master im'] = "im.id = grnTrans.fg_item_id";
 
+        $data['leftJoin']['item_master sim'] = "sim.id = stock_trans.item_id";
+
         if(!empty($param['item_id'])) { $data['where']['stock_trans.item_id'] = $param['item_id']; }
 
         if(!empty($param['batch_no'])) { $data['where']['stock_trans.batch_no'] = $param['batch_no']; }
 
-        $data['customWhere'][] = "stock_trans.trans_type IN('SSI','IGR') AND stock_trans.p_or_m = '-1' ";
+        $data['customWhere'][] = "stock_trans.trans_type IN('SSI','IGR','DLC') AND stock_trans.p_or_m = '-1' ";
 
         $data['group_by'][] = "stock_trans.item_id,stock_trans.batch_no,stock_trans.child_ref_id";
 

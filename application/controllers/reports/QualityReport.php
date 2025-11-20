@@ -103,15 +103,18 @@ class QualityReport extends MY_Controller
 
 							$prcItem = (!empty($prcRow->item_code) ? '[ '.$prcRow->item_code.' ] ' : '').$prcRow->item_name;
 							$grnItem = (!empty($prcRow->grn_item_code) ? '[ '.$prcRow->grn_item_code.' ] ' : '').$prcRow->grn_item_name;
+							$challanItem = (!empty($prcRow->challan_item_code) ? '[ '.$prcRow->challan_item_code.' ] ' : '').$prcRow->challan_item_name;
 
 							$prcIssueQty = (!empty($stockData->issue_qty) ? floatval($stockData->issue_qty) : 0);
-							$issueQty = (($grnQty > 0) ? $grnQty : (($prcIssueQty > 0) ? $prcIssueQty : 0));
+							$issueQty = $prcRow->trans_type != 'DLC' ? (($grnQty > 0) ? $grnQty : (($prcIssueQty > 0) ? $prcIssueQty : 0)) : 0;
 							$stockQty = ($stockQty > 0) ? $stockQty : 0;
 							$balanceQty = ((!empty($balanceQty) && round($balanceQty) > 0) ? floatval($balanceQty) : 0); 
-														
-							$tbody.='<td>'.((!empty($grnItem)) ? $grnItem : (!empty($prcItem) ? $prcItem : '')).'</td>
-								<td>'.(!empty($prcRow->trans_number) ? $prcRow->trans_number : $prcRow->prc_number).'</td>
-								<td>'.(!empty($prcRow->prc_qty) ? floatval($prcRow->prc_qty) : 0).'</td>
+							
+							$usedQty = $usedQty + ($prcRow->trans_type == 'DLC' ? floatval($prcRow->challan_qty) : 0);
+							
+							$tbody.='<td>'.(!empty($challanItem) && $prcRow->trans_type == 'DLC' ? $challanItem : (!empty($grnItem) ? $grnItem : (!empty($prcItem) ? $prcItem : ''))).'</td>
+								<td>'.($prcRow->trans_type == 'DLC' ? $prcRow->ref_no : (!empty($prcRow->trans_number) ? $prcRow->trans_number : $prcRow->prc_number)).'</td>
+								<td>'.($prcRow->trans_type == 'DLC' ? floatval($prcRow->challan_qty) : (!empty($prcRow->prc_qty) ? floatval($prcRow->prc_qty) : 0)).'</td>
 								<td>'.(!empty($prcRow->cut_weight) ? floatval($prcRow->cut_weight) : 0).'</td>
 								<td>'.$issueQty.'</td>
 								<td>'.$usedQty.'</td>
