@@ -165,6 +165,7 @@ class OutsourceModel extends MasterModel{
 		$data['where']['prc_log.trans_type'] = 1;
 		$data['where']['prc_log.process_by'] = 3;
 		$data['where']['prc_log.qty != '] = 0;
+		$data['where']['prc_log.bill_no'] = NULL;
 
 		if(!empty($data['from_date'])) { $data['where']['prc_log.trans_date >='] = $data['from_date']; }
         if(!empty($data['to_date'])) { $data['where']['prc_log.trans_date <='] = $data['to_date']; }
