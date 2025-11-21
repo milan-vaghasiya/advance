@@ -372,7 +372,7 @@ class SalesReport extends MY_Controller{
                     <td>'.$row->item_name.'</td>
                     <td>'.$row->hsn_code.'</td>
 					<td>'.formatDate($row->cod_date).'</td>
-                    <td>'.$row->batch_no.'</td>
+                    <td><div style="max-width: 200px; white-space: normal !important; word-break: break-word;">'.$row->batch_no.'</div></td>
 					<td>'.floatVal($row->inv_qty).'</td>';
                 $tbody.='</tr>';
 				

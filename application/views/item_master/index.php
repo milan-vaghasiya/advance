@@ -47,7 +47,7 @@
     </div>
 </div>
 <?php $this->load->view('includes/footer'); ?>
-<script src="<?php echo base_url();?>assets/js/custom/product.js?v=<?=time()?>"></script>
+<!-- <script src="<?php echo base_url();?>assets/js/custom/product.js?v=<?=time()?>"></script> -->
 <script>
 function getProcessTransHtml(data){
     var postData = data.postData || {};
@@ -90,6 +90,24 @@ function getProcessTransHtml(data){
 		}
 	});
 }
+
+$(document).ready(function(){
+	$(document).on('change','#item_type',function(){
+		var item_type = $(this).val();
+		if(item_type){
+			$.ajax({
+				url:base_url + controller + '/getCategoryList',
+				data:{item_type:item_type},
+				method:"POST",
+				dataType:"json",
+				success:function(data){
+					$("#category_id").html('');
+					$("#category_id").html(data.options);
+				}
+			});
+		}
+	});
+});
 
 function fixWidthHelper(e, ui) {
 	ui.children().each(function () {
