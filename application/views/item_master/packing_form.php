@@ -3,7 +3,6 @@
         <div class="row">
 
             <input type="hidden" name="id" id="id" value="<?=(!empty($dataRow->id))?$dataRow->id:""?>">
-            <input type="hidden" name="item_type" id="item_type" value="<?=(!empty($dataRow->item_type))?$dataRow->item_type:$item_type?>">
 
             <div class="col-md-4 form-group">
                 <label for="item_code">Item Code</label>
@@ -21,8 +20,8 @@
             </div> 
 
             <div class="col-md-3 form-group">
-                <label for="product_type">Item Type</label>
-                <select name="product_type" id="product_type" class="form-control select2 req">
+                <label for="item_type">Item Type</label>
+                <select name="item_type" id="item_type" class="form-control select2 req">
                     <option value="3" <?= (!empty($item_type) && $item_type == 3) ? "selected" : "" ?> <?= empty($dataRow->id) ? "disabled" : "";?>>Raw Material</option>
                     <option value="2" <?= (!empty($item_type) && $item_type == 2) ? "selected" : "" ?> <?= empty($dataRow->id) ? "disabled" : "";?>>Consumable</option>
                     <option value="9" <?= (!empty($item_type) && $item_type == 9) ? "selected" : "" ?>>Packing Material</option>

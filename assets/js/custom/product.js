@@ -175,12 +175,12 @@ $(document).ready(function(){
         window.open(base_url + controller + '/getRevisionExcel/'+encodeURIComponent(window.btoa(JSON.stringify(send_data))),'_blank').focus();
     });
 
-    $(document).on('change','#product_type',function(){
-		var product_type = $(this).val();
-		if(product_type){
+    $(document).on('change','#item_type',function(){
+		var item_type = $(this).val();
+		if(item_type){
 			$.ajax({
 				url:base_url + controller + '/getCategoryList',
-				data:{product_type:product_type},
+				data:{item_type:item_type},
 				method:"POST",
 				dataType:"json",
 				success:function(data){
