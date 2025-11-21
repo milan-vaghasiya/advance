@@ -127,7 +127,7 @@ class QualityReport extends MY_Controller
 							if($j != $prcCount){$tbody.='</tr><tr><td>'.$i++.'</td>'.$blankInTd;}
 							$j++;
 							
-							$totalPrcQty += $prcRow->prc_qty;
+							$totalPrcQty += $prcRow->prc_qty + ($prcRow->trans_type == 'DLC' ? $prcRow->challan_qty : 0);
 							$totalIssueQty += $issueQty;
 							$totalUsedQty += $usedQty;
 							$totalEndPiece += $endPiece;
