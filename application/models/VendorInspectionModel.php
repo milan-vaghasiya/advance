@@ -6,27 +6,21 @@ class VendorInspectionModel extends MasterModel{
     public function getDTRows($data){
         $data['tableName'] = $this->prcLog;
 		
-		$data['select'] = 'prc_log.*,employee_master.emp_name,shift_master.shift_name,prc_log_detail.remark,prc_detail.process_ids,prc_master.item_id,prc_master.prc_number,prc_master.status, item_master.item_name, item_master.item_code, process_master.process_name,prc_log_detail.start_time,prc_log_detail.end_time';
+		$data['select'] = 'prc_log.*,employee_master.emp_name,prc_master.item_id,prc_master.prc_number,prc_master.status, item_master.item_name, item_master.item_code, process_master.process_name';
 		$data['select'] .=',outsource.ch_number as challan_no,party_master.party_name,party_master.id as vendor_id,production_inspection.inspection_file';
 		
 		$data['leftJoin']['outsource'] = 'outsource.id  = prc_log.ref_id';
 		$data['leftJoin']['party_master'] = "party_master.id = outsource.party_id";
-		//$data['leftJoin']['prc_challan_request'] = "prc_challan_request.id = prc_log.prc_id";
 		$data['leftJoin']['prc_master'] = "prc_master.id = prc_log.prc_id";
 		$data['leftJoin']['item_master'] = "item_master.id = prc_master.item_id";
-		$data['leftJoin']['process_master'] = "process_master.id = prc_log.process_id";
-		
+		$data['leftJoin']['process_master'] = "process_master.id = prc_log.process_id";		
 		$data['leftJoin']['employee_master'] = "employee_master.id = prc_log.operator_id";
-        $data['leftJoin']['shift_master'] = "shift_master.id = prc_log.shift_id";
-        $data['leftJoin']['prc_log_detail'] = "prc_log_detail.log_id = prc_log.id AND prc_log_detail.is_delete = 0";
-        $data['leftJoin']['prc_detail'] = "prc_detail.prc_id = prc_log.prc_id";
         $data['leftJoin']['production_inspection'] = "prc_log.id = production_inspection.ref_id";
 		
 		$data['where']['prc_log.rqc_status'] = $data['status'];
 		$data['where']['prc_log.trans_type'] = 1;
 		$data['where']['prc_log.process_by'] = 3;
-		$data['where']['prc_log.qty != '] = 0;
-		
+		$data['where']['prc_log.qty != '] = 0;		
 		$data['where']['prc_log.trans_date >='] = $this->startYearDate;
 		$data['where']['prc_log.trans_date <='] = $this->endYearDate;
 		

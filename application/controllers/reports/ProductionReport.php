@@ -1515,11 +1515,11 @@ class ProductionReport extends MY_Controller{
                
             }
         }
-        $totalIhFPer = ($totalIhForgeRej * 100)/$totalProductionQty; //Inhouse Forge Rejection Total
-        $totalJwFPer = ($totaljwForgeRej * 100)/$totalProductionQty; // Jobwork Forge Rejection
-        $totalIhMcPer = ($totalIhMcRej * 100)/$totalProductionQty; //Inhouse Mc Rejection Total
-        $totalJwMcPer = ($totalJwMcRej * 100)/$totalProductionQty; // Jobwork Mc Rejection
-        $totalJFinalPer = ($totalFinalProcessRej * 100)/$totalProductionQty; // Final Stage Rejection
+        $totalIhFPer = $totalIhForgeRej > 0 ? (($totalIhForgeRej * 100)/$totalProductionQty) : 0; //Inhouse Forge Rejection Total
+        $totalJwFPer = $totaljwForgeRej > 0 ? (($totaljwForgeRej * 100)/$totalProductionQty) : 0; // Jobwork Forge Rejection
+        $totalIhMcPer = $totalIhMcRej > 0 ? (($totalIhMcRej * 100)/$totalProductionQty) : 0; //Inhouse Mc Rejection Total
+        $totalJwMcPer = $totalJwMcRej > 0 ? (($totalJwMcRej * 100)/$totalProductionQty) : 0; // Jobwork Mc Rejection
+        $totalJFinalPer = $totalFinalProcessRej > 0 ? (($totalFinalProcessRej * 100)/$totalProductionQty) : 0; // Final Stage Rejection
 
         $totalIhRejPer = $totalIhFPer + $totalIhMcPer +  $totalJFinalPer; //Total InHouse Rejection
         $totalFRejPer = $totalIhFPer + $totalJwFPer; //Overall Forging Rejection (InH + JW)
@@ -1652,11 +1652,11 @@ class ProductionReport extends MY_Controller{
             }
         }
         $totalRejQty = $totalIhForgeRej+$totaljwForgeRej+$totalIhMcRej+$totalJwMcRej+ $cust_rej_qty;
-        $ihForgePR = ($totalIhForgeRej*100)/$totalRejQty;
-        $jwForgePR = ($totaljwForgeRej*100)/$totalRejQty;
-        $ihMcPR = ($totalIhMcRej*100)/$totalRejQty;
-        $jwMcPR = ($totalJwMcRej*100)/$totalRejQty;
-        $custRejPR = ($cust_rej_qty*100)/$totalRejQty;
+        $ihForgePR = $totalIhForgeRej > 0 ? (($totalIhForgeRej*100)/$totalRejQty) : 0;
+        $jwForgePR = $totaljwForgeRej > 0 ? (($totaljwForgeRej*100)/$totalRejQty) : 0;
+        $ihMcPR = $totalIhMcRej > 0 ? (($totalIhMcRej*100)/$totalRejQty) : 0;
+        $jwMcPR = $totalJwMcRej > 0 ? (($totalJwMcRej*100)/$totalRejQty) : 0;
+        $custRejPR = $cust_rej_qty > 0 ? (($cust_rej_qty*100)/$totalRejQty) : 0;
         $copqTbody ='<tr>
                         <td>InHouse - Forging Rej.</td>
                         <td class="text-center">'.$totalIhForgeRej.'</td>

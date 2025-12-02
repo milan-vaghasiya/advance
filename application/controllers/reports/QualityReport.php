@@ -237,7 +237,7 @@ class QualityReport extends MY_Controller
 				$totalShortQty += $items->short_qty;
 				$totalRate += $totalRating;
 		endforeach;
-		$totalAvgRate = $totalRate/($i-1);
+		$totalAvgRate = $totalRate > 0 ? ($totalRate/($i-1)) : 0;
 		$tfootData .= '<tr class="thead-dark">
 						<th colspan="6" class="text-right">Total</th>
 						<th>'.$totalQty.'</th>
@@ -390,7 +390,7 @@ class QualityReport extends MY_Controller
 				$totalRejQty += $rejFound;
 				$totalRate += $totalRating;
 		endforeach;
-		$totalAvgRate = $totalRate/($i-1);
+		$totalAvgRate = $totalRate > 0 ? ($totalRate/($i-1)) : 0;
 
 		$tfootData .= '<tr class="thead-dark">
 						<th colspan="7" class="text-right">Total</th>
@@ -716,7 +716,7 @@ class QualityReport extends MY_Controller
 			$totalRate += $totalSupplierRate;
 		endforeach;
 		
-		$totalAvgRate = $totalRate/($i-1);
+		$totalAvgRate = $totalRate > 0 ? ($totalRate/($i-1)) : 0;
 		$tfootData .= '<tr class="thead-dark">
 						<th colspan="4" class="text-right">Overall Rating</th>
 						<th>'.round($totalAvgRate,2).'</th>

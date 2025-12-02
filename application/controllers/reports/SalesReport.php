@@ -219,7 +219,7 @@ class SalesReport extends MY_Controller{
         $data = $this->input->post();
         $result = $this->salesReport->getMrpReportData($data);
 
-         $tfoot=""; $totalQty=0;
+        $i = 1; $tbody = ''; $tfoot=""; $totalQty=0;
         foreach($result as $row):
             $tbody .= '<tr>
                 <td class="text-center">'.$i++.'</td>
