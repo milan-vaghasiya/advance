@@ -9,7 +9,6 @@ class VendorInspectionModel extends MasterModel{
 		$data['select'] = 'prc_log.*,employee_master.emp_name,prc_master.item_id,prc_master.prc_number,prc_master.status, item_master.item_name, item_master.item_code, process_master.process_name';
 		$data['select'] .=',outsource.ch_number as challan_no,party_master.party_name,party_master.id as vendor_id,production_inspection.inspection_file';
 		
-		//Join in multiple tables
 		$data['leftJoin']['outsource'] = 'outsource.id  = prc_log.ref_id';
 		$data['leftJoin']['party_master'] = "party_master.id = outsource.party_id";
 		$data['leftJoin']['prc_master'] = "prc_master.id = prc_log.prc_id";
