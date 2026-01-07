@@ -465,7 +465,6 @@ class PdiModel extends MasterModel{
 			</table>';
 		}
 		else if($postData['pdi_report_type'] == "A93_A98"){
-			$logo = base_url('assets/images/precision.png'); 
 			$headerSize = 47;$footerSize=28;
 			$htmlHeader = '<table class="table item-list-bb">
 				<tr>
