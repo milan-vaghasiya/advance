@@ -465,6 +465,7 @@ class PdiModel extends MasterModel{
 			</table>';
 		}
 		else if($postData['pdi_report_type'] == "A93_A98"){
+			$logo = base_url('assets/images/precision.png'); 
 			$headerSize = 47;$footerSize=28;
 			$htmlHeader = '<table class="table item-list-bb">
 				<tr>
@@ -473,42 +474,118 @@ class PdiModel extends MasterModel{
 					<td class="text-left" style="width:30%;"><b>Doc.No.: </b>PHPL/QA/SQ/05</td>
 				</tr>
 				<tr>
-					<td class="text-left"><b>Issue.No & Date: </b> 00 & 21.06.2023</td>
+					<td class="text-left"><b>Rev.No & Date: </b>01 & 29.12.2025</td>
 				</tr>
 				<tr>
-					<td class="text-left"><b>Rev.No & Date: </b>00 & 21.06.2023</td>
+					<td class="text-left"><b>Issue.No & Date: </b> 01 & 21.06.2023</td>
 				</tr>
 			</table>
 			<table class="table item-list-bb" style="margin-top:2px;">
 				<tr class="text-left">
-					<td class="text-center" width="38%"><b>Supplier Name.: </b>'.((!empty($companyData->company_name)) ? $companyData->company_name : "").'</td>
-					<td class="text-center" width="35%"><b>Supplier Inspection Date: </b>'.((!empty($firData->inv_date)) ? formatDate($firData->inv_date) : "").'</td>
-					<td class="text-center" width="27%"><b>PHC Inspection Date</b>: '.((!empty($firData->inspection_date)) ? formatDate($firData->inspection_date) : "").'</td>
+					<td class="text-center" width="18%"><b>Part Name </b></td>
+					<td class="text-center" width="18%">'.((!empty($firData->item_name)) ? $firData->item_name : "").'</td>
+
+					<td class="text-center" width="18%"><b>SUPPLIER INSPECTION DATE / SAMPLE QTY </b></td>
+					<td class="text-center" width="18%">'.((!empty($firData->inv_date)) ? formatDate($firData->inv_date) : "").'</td>
+
+					<td class="text-center" width="18%"><b>PHC Inspection Date</b></td>
+					<td class="text-center" width="18%">'.((!empty($firData->inspection_date)) ? formatDate($firData->inspection_date) : "").'</td>
 				</tr>
-				<tr class="text-left">
-					<td class="text-center"><b>Part No.: </b>'.(((!empty($firData->drw_no)) ? $firData->drw_no : "").' / <b>Rev. No: </b>'.((!empty($firData->rev_no)) ? $firData->rev_no : "")).'</td>
-					<td class="text-center"><b>Invoice No.: </b>'.((!empty($firData->inv_no)) ? $firData->inv_no : "").' / <b>Qty: </b>'.((!empty($firData->pdi_qty) ? $firData->pdi_qty : "")).'</td>
-					<td class="text-center"><b>PHC Sample Qty.: </b>'.((!empty($firData->sampling_qty)) ? $firData->sampling_qty : "").'</td>
+				<tr>
+					<td style="border:1px solid #000; width:16%;">
+						<b>PHC-PART NO. / REV.NO</b>
+					</td>
+					<td width="33.5%">
+						<table class="table item-list-bb">
+							<tr>
+								<td>'.(!empty($firData->drw_no) ? $firData->drw_no : '').'</td>
+								<td>'.(!empty($firData->rev_no) ? $firData->rev_no : '').'</td>
+							</tr>
+						</table>
+					</td>
+
+					<td style="border:1px solid #000; width:16%;">
+						<b>Invoice No. / Qty</b>
+					</td>
+					<td style="border:1px solid #000; width:18%;">
+						'.(!empty($firData->inv_no) ? $firData->inv_no : '').'
+						/
+						'.(!empty($firData->pdi_qty) ? $firData->pdi_qty : '').'
+					</td>
+
+					<td style="border:1px solid #000; width:16%;">
+						<b>PHC Sample Qty</b>
+					</td>
+					<td style="border:1px solid #000; width:18%;">
+						'.(!empty($firData->sampling_qty) ? $firData->sampling_qty : '').'
+					</td>
 				</tr>
+
 				<tr class="text-left">
-					<td class="text-center"><b>Part Name: </b>'.((!empty($firData->item_name)) ? $firData->item_name : "").'</td>
-					<td class="text-center"><b>MTC Ref.No.: </b>'.((!empty($firData->prc_number)) ? $firData->prc_number : "").((!empty($firData->rm_batch)) ? '('.$firData->rm_batch.')' : "").'</td>
-					<td class="text-center"><b>Disposition: </b></td>
+					<td class="text-center" width="18%"><b>Supplier Name </b></td>
+					<td class="text-center" width="18%">'.((!empty($companyData->company_name)) ? $companyData->company_name : "").'</td>
+
+					<td class="text-center" width="18%"><b>MTC Reference No </b></td>
+					<td class="text-center" width="18%">'.((!empty($firData->prc_number)) ? $firData->prc_number : "").((!empty($firData->rm_batch)) ? '('.$firData->rm_batch.')' : "").'</td>
+
+					<td class="text-center" width="18%"><b>Disposition </b></td>
+					<td class="text-center" width="18%"></td>
 				</tr>
 			</table>';
+
 			$htmlFooter = '<table class="table item-list-bb" style="border-bottom:1px solid #000000;">
 				<tr>
-					<td width="28%" rowspan="2"><b>Note (If any) : </b></td>
-					<td class="text-left" width="18%"><b>Insepcted By.: </b>'.$firData->approved_by.'</td>
-					<td class="text-left" width="18%"><b>Approved By.: </b>'.$firData->emp_name.'</td>
-					<td class="text-left" width="18%"><b>Insepcted By.: </b></td>
-					<td class="text-left" width="18%"><b>Approved By.: </b></td>
+					<td width="25%" style="font-size:1.2rem;">
+						<b>Total No of Parameters</b>
+					</td>
+					<td width="20%"></td>
+
+					<td width="25%" style="font-size:1.2rem;">
+						<b>Total No of Accepted Parameters</b>
+					</td>
+					<td width="20%"></td>
+
+					<td width="25%" style="font-size:1.2rem;">
+						<b>Total No of Deviated Parameters</b>
+					</td>
+					<td width="20%"></td>
+
+					<td width="25%" style="font-size:1.2rem;">
+						<b>PIST</b> (Percentage of Inspection Points that Satisfy Tolerance) %
+					</td>
+					<td width="20%"></td>
 				</tr>
+
 				<tr>
-					<td class="text-left" colspan="2"><b>Supplier Comments :</b></td>
-					<td class="text-left" colspan="2"><b>PHC Comments :</b></td>
+					<td style="font-size:1.2rem;"><b>SUPPLIER COMMENTS</b></td>
+					<td colspan="3" style="font-size:1.2rem;"><b></b></td>
+					<td style="font-size:1.2rem;"><b>PHC COMMENTS</b></td>
+					<td colspan="3" style="font-size:1.2rem;"><b></b></td>
+				</tr>
+
+				<tr>
+					<td style="font-size:1.2rem;">
+						<b>INSPECTED BY</b>
+					</td>
+					<td style="font-size:1.2rem;">'.$firData->approved_by.'</td>
+
+					<td style="font-size:1.2rem;">
+						<b>VERIFIED BY</b>
+					</td>
+					<td style="font-size:1.2rem;">'.$firData->emp_name.'</td>
+
+					<td style="font-size:1.2rem;">
+						<b>PHC SQA</b>
+					</td>
+					<td style="border:1px solid #000; font-size:1.2rem;"></td>
+
+					<td style="font-size:1.2rem;">
+						<b>PHC INWARD</b>
+					</td>
+					<td style="border:1px solid #000; font-size:1.2rem;"></td>
 				</tr>
 			</table>
+
 			<table class="table top-table" style="margin-top:10px;">
 				<tr>
 					<td style="width:25%;"></td>
